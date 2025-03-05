@@ -32,6 +32,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="/ogimage.png">
     <meta name="theme-color" content="#3f0076">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>বজু জাম</title>
     <style>
         body {
@@ -201,6 +202,9 @@
                 opacity: 0;
             }
         }
+        #error-message {
+            animation: fadeIn 1s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -221,14 +225,24 @@
         const video = document.getElementById('video');
         const urlInput = document.getElementById('url-input');
         const playButton = document.getElementById('play-button');
-        
+        function showError(message) {
+            const errorText = document.getElementById("error-text");
+            const errorMessage = document.getElementById("error-message");
+            errorText.innerText = message;
+            errorMessage.classList.remove("hidden");
+            setTimeout(() => errorMessage.classList.add("hidden"), 5000);
+        }
         playButton.addEventListener('click', () => {
             const url = urlInput.value;
-            const id = url.match(/(?:v=|\/)([\w-]{11})(?:\S+)?/)[1];
+            const idMatch = url.match(/(?:v=|\/)([\w-]{11})(?:\S+)?/);
+            if (!idMatch) {
+                showError("আপনার দেয়া YouTube লিংকটার সমস্যা আছে। আবার চেষ্টা করুন।");
+                return;
+            }
+            const id = idMatch[1];
             video.src = `https://www.youtube.com/embed/${id}?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=0&rel=0&showinfo=0&playlist=${id}`;
             videoContainer.style.display = 'block';
             urlInput.value = '';
-        
             const sciFiBorder = document.createElement('div');
             sciFiBorder.classList.add('sci-fi-border');
             sciFiBorder.innerHTML = '<div></div>';
@@ -238,5 +252,9 @@
             }, 3000);
         });
     </script>
+    <div id="error-message" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white py-2 px-4 rounded-lg shadow-lg flex items-center space-x-2 hidden">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="error-text"></span>
+    </div>
 </body>
 </html>
