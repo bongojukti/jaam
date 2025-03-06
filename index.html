@@ -288,9 +288,8 @@
             if (!idMatch) {
                 showError("আপনার দেয়া YouTube লিংকটার সমস্যা আছে। আবার চেষ্টা করুন।");
                 return;
-            } else {
-               const id = idMatch; 
             }
+            const id = idMatch;
             video.src = `https://www.youtube.com/embed/${id}?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=0&rel=0&showinfo=0&playlist=${id}`;
             videoContainer.style.display = 'block';
             urlInput.value = '';
