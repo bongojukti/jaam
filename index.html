@@ -90,9 +90,29 @@
             background: rgba(255, 255, 255, 0.2);
             color: #fff;
             cursor: pointer;
+            padding: 12px 25px;
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            box-shadow: 0 4px 10px rgba(255, 75, 43, 0.6);
+            transition: all 0.3s ease;
         }
         #input-container button:hover {
             background: rgba(255, 255, 255, 0.4);
+            color: #000000;
+            background: rgba(55, 255, 55, 1.0);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(55, 255, 43, 0.8);
+        }
+        #input-container button:active {
+            transform: scale(0.95);
+            color: #252525;
+            background: rgba(55, 55, 55, 1.0);
+            box-shadow: 0 6px 15px rgba(55, 55, 43, 0.8);
         }
         .capsule {
             display: flex;
@@ -275,6 +295,14 @@
         const video = document.getElementById('video');
         const urlInput = document.getElementById('url-input');
         const playButton = document.getElementById('play-button');
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        const extractedUrl = getQueryParam("url");
+        if (extractedUrl) {
+            urlInput.value = extractedUrl;
+        }
         function showError(message) {
             const errorText = document.getElementById("error-text");
             const errorMessage = document.getElementById("error-message");
